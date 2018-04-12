@@ -1,4 +1,4 @@
 import { AppRegistry } from 'react-native';
-import App from './App';
+import RNLeaningMain from './src/page/RNLeaningMain'
 
-AppRegistry.registerComponent('RNLearning', () => App);
+AppRegistry.registerComponent('RNLearning', () => RNLeaningMain);
