@@ -9,19 +9,24 @@ const color = {
 
 class FletItem extends PureComponent {
 
+    constructor(props){
+        super(props)
+        this.itemOnpress = this.props.onPress;
+        this.info = this.props.info;
+        this.index = this.props.index;
+        this._onPressed = this._onPressed.bind(this);
+    }
+
     render() {
-       
-        let {info} = this.props
+       let info = this.info;
+       let index = this.index;
         console.log('render cell',this.props);
         return (
-            <TouchableOpacity style={styles.container} onPress={this.props.onPress}>
+            <TouchableOpacity style={styles.container} onPress={this._onPressed}>
                 <Image source={{uri: info.uri}} style={styles.icon} />
-
                 <View style={styles.rightContainer}>
-                    <Text style={styles.h1}>{info.title}</Text>
-                    <View>
-                    </View>
-                    <Text style={styles.p} numberOfLines={3} style={{marginTop:8}}>{info.des}</Text>
+                    <Text style={styles.h1} numberOfLines={1}>{info.title}-{index}</Text>
+                    <Text style={styles.p} numberOfLines={3} >{info.des}</Text>
                     <View style={{flex: 1, justifyContent: 'flex-end'}}>
                         <Text style={[styles.h1, styles.price]}>{info.price}</Text>
                     </View>
@@ -30,7 +35,13 @@ class FletItem extends PureComponent {
             </TouchableOpacity>
         )
     }
+    _onPressed(){
+        let parm = this.info.title + '-' + this.index;
+        this.itemOnpress(parm);
+    }
 }
+
+
 
 const styles = StyleSheet.create({
     container: {
@@ -54,13 +65,14 @@ const styles = StyleSheet.create({
         color: color.theme
     },
     h1: {
-        fontSize: 15,
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#222222',
     },
     p: {
-        fontSize: 13,
+        fontSize: 12,
         color: '#777777',
+        marginVertical :8,
     },
 })
 
