@@ -25,6 +25,9 @@ export default class App extends Component {
   constructor(props){
     super(props)
   }
+  static navigationOptions = {
+    title: 'Welcome',
+  };
   render() {
     let pic = {
       uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'

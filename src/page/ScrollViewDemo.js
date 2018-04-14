@@ -14,6 +14,10 @@ import {
   Image,
   Dimensions
 } from 'react-native';
+import {
+  getStatu,
+  getHeader
+} from '../common/utils'
 
 const courseDsc = '课程以实战为根本目标，通过边做边学、逐步深入的方式推进（某些课程需要学员带上电脑效果更佳）。课程总共分三个阶段，通过前两个阶段较为全面地掌握RN开发能力，再通过第三个阶段平滑地过渡到应用工厂RN开发上，从而让学员更好的接受并理解内容，所有课程结束后具备独立开发RN组件的能力。';
 const courseTarget = '1、帮助移动端同学掌握RN相关技术\n2、提升开发效率和质量\n3、适应行业技术发展趋势';
@@ -26,19 +30,20 @@ const X_WIDTH = 375;
 const X_HEIGHT = 812;
 
 
-export default class RNLeaningMain extends Component {
+export default class ScrollViewDemo extends Component {
   constructor(props){
     super(props)
   }
+  static navigationOptions = {
+    title: 'ScrollView',
+  };
   render() {
     let pic = {
       uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
     };
     return <View style={styles.container}>
-        {this.renderStatu()}
-        <View style={styles.header}>
-          <Text style={styles.title}>RN培训系列课程-滚动列表</Text>
-        </View>
+        {getStatu()}
+        {getHeader('滚动组件','ScrollView')}
         <ScrollView 
           style={styles.scrollview} 
           pagingEnabled={true} 
@@ -93,45 +98,11 @@ export default class RNLeaningMain extends Component {
       </View>;
   }
 
-  /**
-   * 适配IOS平台，返回状态栏高度视图
-   * 
-   * @returns 
-   * @memberof RNLeaningMain
-   */
-  renderStatu(){
-    if(this.isIponeX()){
-      return (Platform.OS === 'ios' ? <View style={{height:28,backgroundColor:'red'}}/> : null);
-    }
-    return (Platform.OS === 'ios' ? <View style={{height:10,backgroundColor:'red'}}/> : null);
-    
-  }
-
-  /**
-   * 判断设备是否是IponeX
-   * 
-   * @returns 
-   * @memberof RNLeaningMain
-   */
-  isIponeX(){
-    return Platform.OS === 'ios' && width === X_WIDTH && height === X_HEIGHT;
-  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header:{
-    flexDirection:'row',
-    justifyContent:'center',
-    alignItems:'center',
-    height:44,
-    backgroundColor:'red',
-  },
-  title:{
-    fontSize:16,
-    color:'white',
   },
   scrollview:{
     flex:1,
