@@ -15,22 +15,18 @@ import {
   Dimensions
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
 const courseDsc = '课程以实战为根本目标，通过边做边学、逐步深入的方式推进（某些课程需要学员带上电脑效果更佳）。课程总共分三个阶段，通过前两个阶段较为全面地掌握RN开发能力，再通过第三个阶段平滑地过渡到应用工厂RN开发上，从而让学员更好的接受并理解内容，所有课程结束后具备独立开发RN组件的能力。';
 const courseTarget = '1、帮助移动端同学掌握RN相关技术\n2、提升开发效率和质量\n3、适应行业技术发展趋势';
 const stage1 = '一阶段：\n1、ReactNative简介\n2、布局详解\n3、常用控件介绍\n4、列表实现方案对比\n5、网络请求的多种方案';
 const stage2 = '二阶段：\n1、React设计思想\n2、原生模块与控件开发\n3、进阶SDK介绍\n4、页面导航\n5、公共控件的设计与实现\n6、RN优化实践';
 const stage3 = '三阶段：\n1、Redux与Mobx\n2、编码规范及常用工具介绍\n3、应用工厂的RN开发规范\n4、颗粒开发';
 const notesForReg = '1、学员对RN学习有一定的意愿\n2、学员在课前通过学习平台自学掌握JS基础\n3、预先支付100元参训基金（用于教学过程中奖优罚劣）';
-const {width,height} = Dimensions.get('window');
+const {width,height} = Dimensions.get('window');//定义屏幕的尺寸常量
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
 
-export default class App extends Component {
+
+export default class RNLeaningMain extends Component {
   constructor(props){
     super(props)
   }
@@ -43,9 +39,15 @@ export default class App extends Component {
         <View style={styles.header}>
           <Text style={styles.title}>RN培训系列课程-滚动列表</Text>
         </View>
-        <ScrollView style={styles.scrollview} pagingEnabled={true} contentContainerStyle={styles.contentContainer} endFillColor="#0087fc">
-          <View style={{height: 120}}>
-            <ScrollView style={styles.scrollview} horizontal={true} pagingEnabled={true}>
+        <ScrollView 
+          style={styles.scrollview} 
+          pagingEnabled={true} 
+          endFillColor="#0087fc"
+          showsVerticalScrollIndicator={false}
+          stickyHeaderIndices={[0]}
+        >
+          <View>
+            <ScrollView style={styles.scrollview} horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false}>
               <Image style={styles.image} source={require('../../res/rn_header_pic.png')} resizeMode={Image.resizeMode.contain} />
               <Image style={styles.image} source={require('../../res/rn_header_pic.png')} resizeMode={Image.resizeMode.contain} />
               <Image style={styles.image} source={require('../../res/rn_header_pic.png')} resizeMode={Image.resizeMode.contain} />
@@ -91,8 +93,28 @@ export default class App extends Component {
       </View>;
   }
 
+  /**
+   * 适配IOS平台，返回状态栏高度视图
+   * 
+   * @returns 
+   * @memberof RNLeaningMain
+   */
   renderStatu(){
+    if(this.isIponeX()){
+      return (Platform.OS === 'ios' ? <View style={{height:28,backgroundColor:'red'}}/> : null);
+    }
     return (Platform.OS === 'ios' ? <View style={{height:10,backgroundColor:'red'}}/> : null);
+    
+  }
+
+  /**
+   * 判断设备是否是IponeX
+   * 
+   * @returns 
+   * @memberof RNLeaningMain
+   */
+  isIponeX(){
+    return Platform.OS === 'ios' && width === X_WIDTH && height === X_HEIGHT;
   }
 }
 
@@ -117,8 +139,4 @@ const styles = StyleSheet.create({
   image:{
     width:width,
   },
-  contentContainer: {
-    paddingVertical: 1
-  },
-
 });
