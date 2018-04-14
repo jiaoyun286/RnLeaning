@@ -35,15 +35,21 @@ export default class ScrollViewDemo extends Component {
     super(props)
   }
   static navigationOptions = {
-    title: 'ScrollView',
-  };
+    title: "ScrollView",
+    headerStyle:{
+      backgroundColor:'#0087fc',
+    },
+    headerTitleStyle:{
+      justifyContent:'center',
+      alignItems:'center',
+    },
+    headerTintColor:'#fff',
+};
   render() {
     let pic = {
       uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
     };
     return <View style={styles.container}>
-        {getStatu()}
-        {getHeader('滚动组件','ScrollView')}
         <ScrollView 
           style={styles.scrollview} 
           pagingEnabled={true} 

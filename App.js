@@ -10,9 +10,16 @@ import {
   StyleSheet,
   Text,
   View,
+  Button,
   ScrollView,
-  Image
+  Image,
+  TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
+import {
+  getStatu,
+  getHeader
+} from './src/common/utils'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' +
@@ -24,9 +31,21 @@ const instructions = Platform.select({
 export default class App extends Component {
   constructor(props){
     super(props)
+    this.onScrollViewPress = this.onScrollViewPress.bind(this);
+    this.onFlatListPress = this.onFlatListPress.bind(this);
+    this.onSectionListPress = this.onSectionListPress.bind(this);
   }
   static navigationOptions = {
-    title: 'Welcome',
+       title: "RN培训系列课程",
+       headerStyle:{
+         backgroundColor:'#0087fc',
+         padding:10,
+       },
+       headerTitleStyle:{
+         justifyContent:'center',
+         alignItems:'center',
+       },
+       headerTintColor:'#fff',
   };
   render() {
     let pic = {
@@ -34,21 +53,44 @@ export default class App extends Component {
     };
     return (
       <View style={styles.container}>
-      <View style={styles.header}>
-      <Text style={styles.title}>RN培训系列课程</Text>
-      </View>
-      <ScrollView 
-      style={styles.scrollview}
-      contentContainerStyle={styles.contentContainer}
-      endFillColor='#0087fc'
-      >
+        <ScrollView
+          style={styles.scrollview}
+          contentContainerStyle={styles.contentContainer}
+        >
 
-      <Image style={styles.image} source={require('./res/rn_bk_pic.png')}/>
-      </ScrollView>
-    
-
+          <TouchableOpacity onPress={this.onScrollViewPress}>
+          <Text style={{ height: 48, color: 'red', fontSize:18 }}>ScrollView</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.onFlatListPress}>
+          <Text style={{ height: 48, color: 'red', fontSize:18 }}>FlatList</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this.onSectionListPress}>
+          <Text style={{ height: 48, color: 'red', fontSize:18 }}>SectionList</Text>
+          </TouchableOpacity>
+          
+        </ScrollView>
       </View>
     );
+  }
+  onScrollViewPress(){
+    // ToastAndroid.show('ScrollView',ToastAndroid.SHORT);
+    this.props.navigation.navigate(
+      'scrollview',
+      {
+
+      }
+    )
+  }
+  onFlatListPress(){
+    this.props.navigation.navigate(
+      'flatview',
+      {
+
+      }
+    )
+  }
+  onSectionListPress(){
+    ToastAndroid.show('SectionList',ToastAndroid.SHORT);
   }
 }
 
@@ -69,13 +111,17 @@ const styles = StyleSheet.create({
   },
   scrollview:{
     flex:1,
+    
   },
   image:{
     resizeMode:'contain',
     alignSelf:'flex-start',
   },
   contentContainer: {
-    paddingVertical: 20
+    flex:1,
+    paddingVertical: 10,
+    justifyContent:'center',
+    alignItems:'center',
   },
 
 });

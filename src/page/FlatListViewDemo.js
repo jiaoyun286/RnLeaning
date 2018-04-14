@@ -34,6 +34,17 @@ import {
           this.header = 'This is a Header';
           this.page = 0;
       }
+      static navigationOptions = {
+        title: "FlatList",
+        headerStyle:{
+          backgroundColor:'#0087fc',
+        },
+        headerTitleStyle:{
+          justifyContent:'center',
+          alignItems:'center',
+        },
+        headerTintColor:'#fff',
+    };
 
       componentDidMount(){
         this.loadData();
@@ -43,8 +54,6 @@ import {
       render(){
           return (
             <View style={{flex:1}}>
-            {getStatu()}
-            {getHeader('列表组件','FlatList')}
             {this.renderFlatList()}
 
             </View>
@@ -73,7 +82,7 @@ import {
 
       _renderEmptyContent(){
           return (
-              <View style={{height:height,justifyContent:'center',alignItems:'center',backgroundColor:'grey'}}>
+              <View style={{height:height,justifyContent:'center',alignItems:'center'}}>
               <Text style={{alignSelf:'center'}}>暂无数据</Text>
               </View>
           );

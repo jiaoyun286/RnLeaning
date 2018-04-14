@@ -8,6 +8,9 @@ import {
     Image,
     Dimensions
   } from 'react-native';
+const {width,height} = Dimensions.get('window');//定义屏幕的尺寸常量
+const X_WIDTH = 375;
+const X_HEIGHT = 812;
 export function getStatu() {
   if (Platform.OS === 'ios') {
     return width === X_WIDTH && height === X_HEIGHT ? (
@@ -20,8 +23,7 @@ export function getStatu() {
 }
 
 
-export function getHeader(title1,title2) {
-    let titleTemp = `RN培训系列课程-${title1}-${title2}`;
+export function getHeader(title) {
   return (
     <View
       style={{
@@ -38,7 +40,7 @@ export function getHeader(title1,title2) {
           color: 'white',
         }}
       >
-        {titleTemp}
+        {title}
       </Text>
     </View>
   );

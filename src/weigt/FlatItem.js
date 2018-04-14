@@ -1,5 +1,9 @@
-import React, {PureComponent} from 'react'
-import {View, Text, StyleSheet, TouchableOpacity, Image, PixelRatio} from 'react-native'
+import React, { PureComponent } from 'react'
+import {
+    View,
+    Text, StyleSheet,
+    TouchableOpacity, Image, PixelRatio
+} from 'react-native'
 
 const color = {
     theme: 'red',
