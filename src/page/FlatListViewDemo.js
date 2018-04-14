@@ -11,6 +11,7 @@ import {
     Image,
     Dimensions,
     ToastAndroid,
+    RefreshControl,
   } from 'react-native';
   import {
     getStatu,
@@ -30,6 +31,7 @@ import {
               
           }
           this._onItemOnpress = this._onItemOnpress.bind(this);
+          this._renderRefresh = this._renderRefresh.bind(this);
           this.foot = '';
           this.header = 'This is a Header';
           this.page = 0;
@@ -70,8 +72,15 @@ import {
               ListFooterComponent={ this._renderFooter }
               onEndReachedThreshold={0.8}
               onEndReached={ this._onEndReached }
-              refreshing={ this.state.refreshing }
-              onRefresh={ this._renderRefresh }
+
+              refreshControl={
+                  <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this._renderRefresh}
+                  title="Loading..."
+                  colors={['#0087fc', '#00ff00', '#0000ff']}
+                  />
+              }
               ListEmptyComponent={ this._renderEmptyContent }
               ItemSeparatorComponent={this._renderItemSeparatorComponent}
               getItemLayout={(data,index) => ({length:120,offset:(120+0.5) * index,index})}
