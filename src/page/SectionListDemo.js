@@ -7,7 +7,7 @@ import {
     StyleSheet,
     Text,
     View,
-    FlatList,
+    SectionList,
     Image,
     Dimensions,
     ToastAndroid,
@@ -18,7 +18,7 @@ import {
     getHeader
   } from '../common/utils'
   import FlatItme from '../weigt/FlatItem'
-  import flatData from '../data/courseData'
+  import flatData from '../data/sectionData'
   const {width,height} = Dimensions.get('window');//定义屏幕的尺寸常量
   export default class FlatListViewDemo extends Component{
       constructor(props){
@@ -37,7 +37,7 @@ import {
           this.page = 0;
       }
       static navigationOptions = {
-        title: "FlatList",
+        title: "SectionList",
         headerStyle:{
           backgroundColor:'#0087fc',
         },
@@ -64,13 +64,14 @@ import {
 
       renderFlatList(){
           return(
-              <FlatList
-              data={this.state.dataList}
+              <SectionList
+              sections={this.state.dataList}
               renderItem={this._renderItem}
-              keyExtractor={ this._keyExtractor }
+              renderSectionHeader={this._renderSectionHeader}
+             
               ListHeaderComponent={ this._renderHeader }
               ListFooterComponent={ this._renderFooter }
-              onEndReachedThreshold={0.8}
+              onEndReachedThreshold={0.5}
               onEndReached={ this._onEndReached }
 
               refreshControl={
@@ -83,6 +84,7 @@ import {
               }
               ListEmptyComponent={ this._renderEmptyContent }
               ItemSeparatorComponent={this._renderItemSeparatorComponent}
+              stickySectionHeadersEnabled={true}
              
              
               />
@@ -98,8 +100,15 @@ import {
 
       }
 
+      _renderSectionHeader=(section) => {
+          console.log('section',section);
+          return (
+              <View style={{flex:1,height:36,backgroundColor:'red',justifyContent:'center',paddingLeft:10}}>
+              <Text>{section.section.key}</Text>
+              </View>
+          );
+      }
       _renderItem = (info) => {
-        console.log('FlatListViewDemo--info',info);
           return (
               <FlatItme
                info={info.item} 
@@ -199,7 +208,7 @@ import {
 
             //获取测试数据
             let dataList = this.getTestList(false)
-            this.page++;
+           
 
             this.setState({
                 dataList: dataList,
@@ -214,18 +223,23 @@ import {
             this.page = 0;
         }
         let newList = flatData.map((data) => {
+            let subList = data.data.map((subData) => {
+               return {
+                uri: subData.cover,
+                title: subData.title+this.page,
+                des:subData.description,
+                price: subData.price,
+                noteCount:subData.notecount,
+               }
+            });
             return {
-                uri: data.cover,
-                title: data.title+this.page,
-                des:data.description,
-                price: data.price,
-                noteCount:data.notecount,
+                key:data.section + this.page,
+                data:subList,
             }
-        })
-
-        
+        });
         console.log('test data',newList)
-        return isReload ? newList : [...this.state.dataList, ...newList]
+        this.page++;
+        return isReload ? newList : [...this.state.dataList, ...newList];
     }
 
   }

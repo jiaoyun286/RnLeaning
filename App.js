@@ -79,7 +79,7 @@ export default class App extends Component {
       {
 
       }
-    )
+    );
   }
   onFlatListPress(){
     this.props.navigation.navigate(
@@ -87,10 +87,15 @@ export default class App extends Component {
       {
 
       }
-    )
+    );
   }
   onSectionListPress(){
-    ToastAndroid.show('SectionList',ToastAndroid.SHORT);
+    this.props.navigation.navigate(
+      'sectionList',
+      {
+
+      }
+    );
   }
 }
 
