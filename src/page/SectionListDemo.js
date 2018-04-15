@@ -101,7 +101,6 @@ import {
       }
 
       _renderSectionHeader=(section) => {
-          console.log('section',section);
           return (
               <View style={{flex:1,height:36,backgroundColor:'red',justifyContent:'center',paddingLeft:10}}>
               <Text>{section.section.key}</Text>
@@ -176,11 +175,6 @@ import {
         this.setState({refreshing: true})
          // 模拟网络请求
          setTimeout(() => {
-            // 模拟网络加载失败的情况
-            // if (Math.random() < 0.2) {
-            //     this.setState({refreshing: true})
-            //     return
-            // }
 
             //获取测试数据
             let dataList = this.getTestList(true)
@@ -200,16 +194,8 @@ import {
         this.setState({isLoadingMore:true,isNoMoreData:false})
            // 模拟网络请求
            setTimeout(() => {
-            // 模拟网络加载失败的情况
-            // if (Math.random() < 0.2) {
-            //     this.setState({refreshing: true})
-            //     return
-            // }
-
             //获取测试数据
-            let dataList = this.getTestList(false)
-           
-
+            let dataList = this.getTestList(false);
             this.setState({
                 dataList: dataList,
                 isLoadingMore: false,
@@ -237,7 +223,6 @@ import {
                 data:subList,
             }
         });
-        console.log('test data',newList)
         this.page++;
         return isReload ? newList : [...this.state.dataList, ...newList];
     }
