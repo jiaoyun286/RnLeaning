@@ -34,6 +34,7 @@ export default class App extends Component {
     this.onScrollViewPress = this.onScrollViewPress.bind(this);
     this.onFlatListPress = this.onFlatListPress.bind(this);
     this.onSectionListPress = this.onSectionListPress.bind(this);
+    this.onFetchDemoPress = this.onFetchDemoPress.bind(this);
   }
   static navigationOptions = {
        title: "RN培训系列课程",
@@ -67,6 +68,9 @@ export default class App extends Component {
           <TouchableOpacity onPress={this.onSectionListPress}>
           <Text style={{ height: 48, color: 'red', fontSize:18 }}>SectionList</Text>
           </TouchableOpacity>
+          <TouchableOpacity onPress={this.onFetchDemoPress}>
+          <Text style={{ height: 48, color: 'red', fontSize:18 }}>FetchDemo</Text>
+          </TouchableOpacity>
           
         </ScrollView>
       </View>
@@ -92,6 +96,14 @@ export default class App extends Component {
   onSectionListPress(){
     this.props.navigation.navigate(
       'sectionList',
+      {
+
+      }
+    );
+  }
+  onFetchDemoPress(){
+    this.props.navigation.navigate(
+      'fetch',
       {
 
       }

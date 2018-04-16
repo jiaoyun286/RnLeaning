@@ -117,8 +117,11 @@ import {
       }
 
       _onItemOnpress(itemData){
-        ToastAndroid.show(itemData,ToastAndroid.SHORT);
-
+        if(Platform === 'android'){
+            ToastAndroid.show(itemData,ToastAndroid.SHORT);
+        } else {
+            alert(itemData);
+        }
       }
 
        // Header布局
