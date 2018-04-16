@@ -83,10 +83,29 @@ import {
               }
               ListEmptyComponent={ this._renderEmptyContent }
               ItemSeparatorComponent={this._renderItemSeparatorComponent}
+              
+              getItemLayout={this.getLayoutItem}
              
              
               />
           );
+      }
+      /**
+       * 优化渲染效率
+       * 如果不做该项优化，每个列表项需要事先渲染一次，动态获取其渲染尺寸，然后再真正的渲染到页面中
+       * getItemLayout={this.getLayoutItem}
+       * 
+       * @param {any} data 
+       * @param {any} index 
+       * @returns 
+       * @memberof FlatListViewDemo
+       */
+      getLayoutItem(data, index) {
+          if (index === 0) {
+              return ({ length: 40, offset: 40 * index, index });
+          } else {
+              return ({ length: 120, offset: 120 * (index - 1) + 40, index });
+          }
       }
 
       _renderEmptyContent(){
