@@ -65,28 +65,27 @@ import {
       renderFlatList(){
           return(
               <FlatList
-              data={this.state.dataList}
-              renderItem={this._renderItem}
-              keyExtractor={ this._keyExtractor }
-              ListHeaderComponent={ this._renderHeader }
-              ListFooterComponent={ this._renderFooter }
-              onEndReachedThreshold={0.8}
-              onEndReached={ this._onEndReached }
-
+              data={this.state.dataList}//数据源
+              renderItem={this._renderItem}//渲染列表项回调
+              keyExtractor={ this._keyExtractor } //
+              ListHeaderComponent={ this._renderHeader } //渲染Header回调
+              ListFooterComponent={ this._renderFooter } //渲染Footer回调
+              onEndReachedThreshold={0.8} //OnEndReached回调函数触发策略
+              onEndReached={ this._onEndReached } //将要滚动到列表底部触发的回调，用于上拉加载更多
               refreshControl={
                   <RefreshControl
-                  refreshing={this.state.refreshing}
-                  onRefresh={this._renderRefresh}
-                  title="Loading..."
-                  colors={['#0087fc', '#00ff00', '#0000ff']}
+                  refreshing={this.state.refreshing}//loading状态，true显示loading，false隐藏loading
+                  onRefresh={this._renderRefresh}//下拉刷新回调
+                  title="Loading..." //loading文本提示，IOS有效
+                  colors={['#0087fc', '#00ff00', '#0000ff']} //loading颜色 Android有效
                   />
-              }
-              ListEmptyComponent={ this._renderEmptyContent }
-              ItemSeparatorComponent={this._renderItemSeparatorComponent}
-              
-              getItemLayout={this.getLayoutItem}
-             
-             
+              }//定义loading
+              ListEmptyComponent={ this._renderEmptyContent } //列表数据为空时渲染的视图组件
+              ItemSeparatorComponent={this._renderItemSeparatorComponent} //自定义类别分割线组件
+              initialNumToRender={8}
+              removeClippedSubviews={true} 
+              windowSize={15}
+              getItemLayout={this.getLayoutItem}     
               />
           );
       }
@@ -101,11 +100,7 @@ import {
        * @memberof FlatListViewDemo
        */
       getLayoutItem(data, index) {
-          if (index === 0) {
-              return ({ length: 40, offset: 40 * index, index });
-          } else {
-              return ({ length: 120, offset: 120 * (index - 1) + 40, index });
-          }
+        return ({ length: 120, offset: 121 * index + 40, index });
       }
 
       _renderEmptyContent(){

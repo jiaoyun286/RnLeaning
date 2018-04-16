@@ -12,7 +12,8 @@ import {
   View,
   ScrollView,
   Image,
-  Dimensions
+  Dimensions,
+  RefreshControl,
 } from 'react-native';
 import {
   getStatu,
@@ -33,6 +34,10 @@ const X_HEIGHT = 812;
 export default class ScrollViewDemo extends Component {
   constructor(props){
     super(props)
+    this.state = {
+      refreshing:false,
+      
+  }
   }
   static navigationOptions = {
     title: "ScrollView",
@@ -51,14 +56,48 @@ export default class ScrollViewDemo extends Component {
     };
     return <View style={styles.container}>
         <ScrollView 
+          //通用属性
           style={styles.scrollview} 
+          contentContainerStyle={styles.contentContainer}
           pagingEnabled={true} 
-          endFillColor="#0087fc"
-          showsVerticalScrollIndicator={false}
-          stickyHeaderIndices={[0]}
+          keyboardDismissMode={'on-drag'}//拖拽滚动视图时是否隐藏软键盘
+          keyboardShouldPersistTaps={'never'}//软键盘可见时，点击点击ScrollView后是否收起
+          refreshControl={
+            <RefreshControl
+            refreshing={this.state.refreshing}//loading状态，true显示loading，false隐藏loading
+            onRefresh={this._renderRefresh}//下拉刷新回调
+            title="Loading..." //loading文本提示，IOS有效
+            colors={['#0087fc', '#00ff00', '#0000ff']} //loading颜色 Android有效
+            />
+          }//定义loading
+          onContentSizeChange={
+            (contentWidth,contentHeight) => {
+              //ScrollView内容的视图发生变化时的回调
+            }
+          }
+          onScroll={
+            () =>{
+              //滚动时的回调，每帧最多回调一次，回调频率由scrollEventThrottle属性控制
+            }
+          }
+          removeClippedSubviews={true}//是否移除屏幕外的子视图（实验），子视图的overflow需要时时hidden，提高大列表性能
+          showsVerticalScrollIndicator={false}//是否显示滚动条
+          stickyHeaderIndices={[0]}//指定那些子视图在滚动到顶部时吸附在顶部，不能用在横向
+          scrollEnabled={true}//是否可滚动
+          //Android平台专有属性
+          endFillColor="#0087fc" //子视图不满屏时，剩余空间的填充颜色
+          //IOS专有属性
+          bounces={true}//滚动到底部是否可弹性效果
+          scrollEventThrottle={2}//指定onScrll每秒回调频率，默认为0，每次滚动只回调一次
+          //...
         >
           <View>
-            <ScrollView style={styles.scrollview} horizontal={true} pagingEnabled={true} showsHorizontalScrollIndicator={false}>
+            <ScrollView 
+            style={styles.scrollview} 
+            horizontal={true} 
+            pagingEnabled={true} //是否按屏幕尺寸的整数倍滚动，可以用于水平分页
+            showsHorizontalScrollIndicator={false}
+            >
               <Image style={styles.image} source={require('../../res/rn_header_pic.png')} resizeMode={Image.resizeMode.contain} />
               <Image style={styles.image} source={require('../../res/rn_header_pic.png')} resizeMode={Image.resizeMode.contain} />
               <Image style={styles.image} source={require('../../res/rn_header_pic.png')} resizeMode={Image.resizeMode.contain} />
@@ -116,4 +155,7 @@ const styles = StyleSheet.create({
   image:{
     width:width,
   },
+  contentContainer:{
+    paddingVertical:20,
+  }
 });

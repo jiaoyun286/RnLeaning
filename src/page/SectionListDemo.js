@@ -20,6 +20,9 @@ import {
   import FlatItme from '../weigt/FlatItem'
   import flatData from '../data/sectionData'
   const {width,height} = Dimensions.get('window');//定义屏幕的尺寸常量
+//   const VIEWABILITY_CONFIG = {
+//       mini
+//   }
   export default class FlatListViewDemo extends Component{
       constructor(props){
           super(props);
@@ -65,15 +68,14 @@ import {
       renderFlatList(){
           return(
               <SectionList
-              sections={this.state.dataList}
-              renderItem={this._renderItem}
-              renderSectionHeader={this._renderSectionHeader}
-             
+              sections={this.state.dataList}//用于渲染的数据源
+              renderItem={this._renderItem} //渲染列表项
+              renderSectionHeader={this._renderSectionHeader} //渲染section的头部组件
+              stickySectionHeadersEnabled={true}//section头部组件的吸附效果（IOS平台默认属性）
               ListHeaderComponent={ this._renderHeader }
               ListFooterComponent={ this._renderFooter }
               onEndReachedThreshold={0.5}
               onEndReached={ this._onEndReached }
-
               refreshControl={
                   <RefreshControl
                   refreshing={this.state.refreshing}
@@ -84,9 +86,6 @@ import {
               }
               ListEmptyComponent={ this._renderEmptyContent }
               ItemSeparatorComponent={this._renderItemSeparatorComponent}
-              stickySectionHeadersEnabled={true}
-             
-             
               />
           );
       }
